@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function conversionHistory(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case type.GET_CONVERSION_HISTORY_REQUESTED:
       return {
@@ -15,7 +14,6 @@ export default function conversionHistory(state = initialState, action) {
         loading: true,
       };
     case type.GET_CONVERSION_HISTORY_SUCCESS:
-      console.log('Success');
       return {
         ...state,
         loading: false,
