@@ -5,11 +5,10 @@ import Converter from './Converter';
 
 const useStyles = makeStyles((theme) => ({
   dashboard: {
-    width: '100%',
+    // width: '100%',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+    // justifyContent: 'center',
+    margin: '150px 50px 0 50px',
   },
 }));
 

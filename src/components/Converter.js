@@ -9,8 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 120,
+    width: '300px',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#70757a',
     lineHeight: 1.2,
     textAlign: 'left',
-    marginBottom: '4px',
+    marginBottom: '20px',
   },
   value: {
     color: '#202124',
@@ -31,13 +31,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'normal',
     wordBreak: 'break-all',
     lineHeight: '1.2',
+    marginTop: '20px',
   },
   converterContainer: {
-    width: '50%',
+    width: '40%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'column',
+  },
+  options: {
+    '& .MuiSelect-selectMenu': {
+      margin: '20px 0',
+    },
   },
 }));
 
@@ -70,28 +74,30 @@ const Converter = ({ code, setCode }) => {
     setCode(event.target.value);
   };
 
-  return loading ? (
-    <h1>Loading..</h1>
-  ) : (
-    code && (
-      <div className={classes.converterContainer}>
-        <Typography className={classes.title}>1 Bitcoin Equals</Typography>
-        <FormControl variant='outlined' className={classes.formControl}>
-          <InputLabel htmlFor='outlined-age-native-simple'>Country</InputLabel>
-          <Select native onChange={handleChange} label='Country'>
-            {codes.map((code) => (
-              <option key={code} aria-label={code} value={code}>
+  return (
+    <div className={classes.converterContainer}>
+      <Typography className={classes.title}>1 Bitcoin Equals</Typography>
+      <FormControl variant='outlined' className={classes.formControl}>
+        <Select native onChange={handleChange}>
+          {codes &&
+            codes.map((code) => (
+              <option
+                key={code}
+                aria-label={code}
+                value={code}
+                className={classes.options}
+              >
                 {' '}
                 {conversions.bpi[code].description}{' '}
               </option>
             ))}
-          </Select>
-        </FormControl>
-        <Typography
-          className={classes.value}
-        >{`${conversions.bpi[code].rate} ${conversions.bpi[code].description}`}</Typography>
-      </div>
-    )
+        </Select>
+      </FormControl>
+      <Typography className={classes.value}>
+        {code &&
+          `${conversions.bpi[code].rate} ${conversions.bpi[code].description}`}
+      </Typography>
+    </div>
   );
 };
 
