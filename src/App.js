@@ -1,12 +1,7 @@
-import './App.css';
-import Chart from './components/Chart';
+import Dashboard from './components/Dashboard';
 
 function App() {
-  return (
-    <div className='App'>
-      <Chart />
-    </div>
-  );
+  return <Dashboard />;
 }
 
 export default App;
