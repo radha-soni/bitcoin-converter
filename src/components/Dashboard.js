@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chart from './Chart';
 import Converter from './Converter';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   dashboard: {
-    // width: '100%',
     display: 'flex',
-    // justifyContent: 'center',
-    margin: '150px 50px 0 50px',
+    flexWrap: 'wrap',
+    margin: 40,
   },
 }));
 

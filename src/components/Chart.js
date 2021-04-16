@@ -3,18 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getConversionHistory } from '../store/actions/conversionHistory';
 import { Line } from 'react-chartjs-2';
 import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   chartContainer: {
-    width: '60%',
-    marginLeft: '50px',
+    flex: '60%',
+    width: '50%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  chartLabel: { margin: '20px 0', textAlign: 'center', color: '#aaa' },
 }));
 
 const Chart = ({ code }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { conversionHistory, loading, error } = useSelector(
+  const { conversionHistory, loading } = useSelector(
     (state) => state.conversionHistory
   );
 
@@ -45,10 +51,6 @@ const Chart = ({ code }) => {
     }
   }, [code]);
 
-  useEffect(() => {
-    console.log(conversionHistory);
-  }, [conversionHistory]);
-
   const data = (canvas) => {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, 0, 500);
@@ -78,47 +80,47 @@ const Chart = ({ code }) => {
 
   return (
     <div className={classes.chartContainer}>
-      {loading ? (
-        <h1>Loading..</h1>
+      {loading || !conversionHistory ? (
+        <CircularProgress />
       ) : (
-        conversionHistory && (
-          <>
-            <p>Last 60 days trend</p>
-            <Line
-              data={data}
-              options={{
-                scales: {
-                  xAxes: [
-                    {
-                      gridLines: {
-                        display: false,
-                      },
-                      ticks: {
-                        autoSkip: true,
-                        maxTicksLimit: 2,
-                        maxRotation: 0,
-                      },
+        <>
+          <Typography className={classes.chartLabel}>
+            Last 60 days trend
+          </Typography>
+          <Line
+            data={data}
+            options={{
+              scales: {
+                xAxes: [
+                  {
+                    gridLines: {
+                      display: false,
                     },
-                  ],
-                  yAxes: [
-                    {
-                      gridLines: {
-                        color: '#eeeeee',
-                      },
-                      ticks: {
-                        stepSize: 10000,
-                        maxRotation: 0,
-                      },
+                    ticks: {
+                      autoSkip: true,
+                      maxTicksLimit: 2,
+                      maxRotation: 0,
                     },
-                  ],
-                },
-                legend: {
-                  display: false,
-                },
-              }}
-            />
-          </>
-        )
+                  },
+                ],
+                yAxes: [
+                  {
+                    gridLines: {
+                      color: '#eeeeee',
+                    },
+                    ticks: {
+                      stepSize: 10000,
+                      maxRotation: 0,
+                    },
+                  },
+                ],
+              },
+              legend: {
+                display: false,
+              },
+            }}
+          />
+        </>
       )}
     </div>
   );

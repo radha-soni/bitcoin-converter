@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConversions } from '../store/actions/conversions';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Typography } from '@material-ui/core';
@@ -29,14 +28,15 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Google Sans,arial,sans-serif',
     fontSize: '36px',
     fontWeight: 'normal',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
     lineHeight: '1.2',
     marginTop: '20px',
   },
   converterContainer: {
-    width: '40%',
+    flex: '35%',
     display: 'flex',
     flexDirection: 'column',
+    paddingRight: 20,
   },
   options: {
     '& .MuiSelect-selectMenu': {
@@ -48,9 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const Converter = ({ code, setCode }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { conversions, loading, error } = useSelector(
-    (state) => state.conversions
-  );
+  const { conversions } = useSelector((state) => state.conversions);
   const [codes, setCodes] = useState(null);
 
   useEffect(() => {
@@ -59,7 +57,6 @@ const Converter = ({ code, setCode }) => {
 
   useEffect(() => {
     if (conversions) {
-      console.log(conversions);
       setCodes(Object.keys(conversions.bpi));
     }
   }, [conversions]);
